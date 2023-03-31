@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Pêche Vaucluse</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 
@@ -20,7 +21,7 @@
         }
 
 
-        #divcarte {
+        #map {
             width: 100%;
             height: 100%;
         }
@@ -29,7 +30,7 @@
 </head>
 
 <body>
-    <div id="divcarte">
+    <div id="map">
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
@@ -37,7 +38,7 @@
     <script type="text/javascript">
 
         //pour ajouter la map leaflet
-        var map = L.map("divcarte").setView([43.942259, 4.797535], 12);
+        var map = L.map("map").setView([43.942259, 4.797535], 12);
         var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: 'Fond de map par les contributeurs <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         }).addTo(map);
