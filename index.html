@@ -33,26 +33,50 @@
     <script src="water.geojson" type="text/javascript"></script>
     <script type="text/javascript">
 
-      //pour ajouter la carte leaflet
-      var carte = L.map("divcarte").setView([43.942259, 4.797535], 12);
+      //pour ajouter la map leaflet
+      var map = L.map("divcarte").setView([43.942259, 4.797535], 12);
       var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-			     attribution: 'Fond de carte par les contributeurs <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-         }).addTo(carte);
+			     attribution: 'Fond de map par les contributeurs <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+         }).addTo(map);
 
      //pour créer la couche geojson
      var water_lyr = L.geoJSON(water,
       )
-      .addTo(carte);
+      .addTo(map);
+
+    //géolocalisation
+    map.locate({setView: true, maxZoom: 16});
+
+    function onLocationFound(e) {
+        var radius = e.accuracy;
+
+        L.marker(e.latlng).addTo(map)
+            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+        L.circle(e.latlng, radius).addTo(map);
+    }
+
+    map.on('locationfound', onLocationFound);
+
+    function onLocationError(e) {
+        alert(e.message);
+    }
+
+    map.on('locationerror', onLocationError);
+
+
+
+
+
+
+
+
+
 //On veut mettre un style selon les attributs
 //catégorie_piscicole=1
 //catégorie_piscicole=2
 //fishing=restriction
 //intermittent=yes
-
-
-
-
-
 
     </script>
 
