@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Pêche Vaucluse</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
+      <style>
+        html, body {
+          width: 100%;
+          height: 100%;
+        }
+
+        #divcarte{
+          width: 99%;
+          height: 98%;
+        }
+      </style>
+
+  </head>
+
+  <body>
+    <div id="divcarte">
+
+    </div>
+    <script src="water.geojson" type="text/javascript"></script>
+    <script type="text/javascript">
+
+      //pour ajouter la carte leaflet
+      var carte = L.map("divcarte").setView([43.942259, 4.797535], 12);
+      var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+			     attribution: 'Fond de carte par les contributeurs <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+         }).addTo(carte);
+
+     //pour créer la couche geojson
+     var water_lyr = L.geoJSON(water,
+      )
+      .addTo(carte);
+//On veut mettre un style selon les attributs
+//catégorie_piscicole=1
+//catégorie_piscicole=2
+//fishing=restriction
+//intermittent=yes
+
+
+
+
+
+
+    </script>
+
+  </body>
+</html>
