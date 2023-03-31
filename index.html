@@ -37,20 +37,50 @@
     <script src="water.geojson" type="text/javascript"></script>
     <script type="text/javascript">
 
-        //pour ajouter la map leaflet
-        var map = L.map("map").setView([43.942259, 4.797535], 12);
-        var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '<a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-        }).addTo(map);
+//pour ajouter la map leaflet
+var map = L.map("map").setView([43.942259, 4.797535], 12);
 
-        //pour créer la couche geojson
-        var water_lyr = L.geoJSON(water,
-        )
-            .addTo(map);
+//pour créer la couche geojson
+var water_lyr = L.geoJSON(water).addTo(map);
 
-        var ld = L.control.locate().addTo(map);
+//geolocalisation
+var ld = L.control.locate().addTo(map);
 
-       
+//layer
+var OpenStreetMap_France = L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+	maxZoom: 20,
+	attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+});
+
+var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+});
+
+var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	maxZoom: 20
+});
+
+map.addLayer(OpenStreetMap_France);
+    
+map.addControl(new L.Control.Layers( {
+    'OpenStreetMap': OpenStreetMap_France, 
+    'OpenStreetMapHot' : OpenStreetMap_HOT, 
+    'ESRI Map': Esri_WorldStreetMap, 
+    'ESRI Imagery': Esri_WorldImagery, 
+    'CartoDB_DarkMatter' : CartoDB_DarkMatter
+    }, {})
+);
 //On veut mettre un style selon les attributs
 //catégorie_piscicole=1
 //catégorie_piscicole=2
