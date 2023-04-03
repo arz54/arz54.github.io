@@ -64,17 +64,21 @@ map.addControl(new L.Control.Layers( {
 );
 
 //On veut mettre un style selon les attributs
-//catégorie_piscicole=1
-//catégorie_piscicole=2
-//fishing=restriction
-//intermittent=yes
-
-
+//catégorie_piscicole=1 et categorie_piscicole=2
 L.geoJSON(water, {
     style: function(feature) {
         switch (feature.properties.categorie_piscicole) {
             case '1': return {color: "#2fff00"};
             case '2':   return {color: "#006eff"};
+        }
+    }
+}).addTo(map);
+//fishing=restriction
+L.geoJSON(water, {
+    style: function(feature) {
+        switch (feature.properties.restriction) {
+            case 'no_fishing': return {color: "#2fff00"};
+            case 'temporary_no':   return {color: "#006eff"};
         }
     }
 }).addTo(map);
