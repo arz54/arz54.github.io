@@ -74,14 +74,7 @@ L.geoJSON(water, {
     }
 }).addTo(map);
 //fishing=restriction
-L.geoJSON(water, {
-    style: function(feature) {
-        switch (feature.properties.restriction) {
-            case 'no_fishing': return {color: "#2fff00"};
-            case 'temporary_no':   return {color: "#006eff"};
-        }
-    }
-}).addTo(map);
+
 
 
 
