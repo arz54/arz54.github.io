@@ -41,9 +41,6 @@
 //pour ajouter la map leaflet
 var map = L.map("map").setView([43.942259, 4.797535], 12);
 
-//pour créer la couche geojson
-var water_lyr = L.geoJSON(water).addTo(map);
-
 //geolocalisation
 var ld = L.control.locate({
     flyTo: 'yes'
@@ -68,13 +65,13 @@ L.geoJSON(water, {
     style: function(feature) {
         switch (feature.properties.categorie_piscicole) {
             case '1': return {color: "#2fff00"};
-            case '2':   return {color: "#006eff"};
+            case '2': return {color: "#006eff"};
         }
     }
 }).addTo(map);
 //fishing=restriction
 
-
+var categorie_1 = L.geoJSON(json.parse)
 
 
 
