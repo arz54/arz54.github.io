@@ -31,6 +31,7 @@
     <div id="map">
 
     </div>
+    <script src="path/to/autolinker/dist/Autolinker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script src="water.geojson" type="text/javascript"></script>    
     <script type="text/javascript" src="variable.js"></script>
@@ -73,6 +74,32 @@ var layerControl
 layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
 layerControl.addTo(map);
 
+function pop_content(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+         
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['categorie_piscicole'] !== null ? autolinker.link(feature.properties['categorie_piscicole'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ref:sandre'] !== null ? autolinker.link(feature.properties['ref:sandre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['old_ref:sandre'] !== null ? autolinker.link(feature.properties['old_ref:sandre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
 </script>
 
