@@ -36,56 +36,36 @@
     <script type="text/javascript" src="variable.js"></script>
     <script type="text/javascript">
 
+var reserve = L.layerGroup();
+
 //pour ajouter la map leaflet
-var map = L.map("map").setView([43.942259, 4.797535], 12);
+var map 
+map = L.map("map").setView([43.942259, 4.797535], 12);
 
 //geolocalisation
-var ld = L.control.locate({
+var ld 
+ld = L.control.locate({
     flyTo: 'yes'
     })
-  .addTo(map);
+.addTo(map);
 
 //Tile providers
 map.addLayer(OpenStreetMap_France);
-    
-map.addControl(new L.Control.Layers( {
-    'OpenStreetMap': OpenStreetMap_France, 
-    'OpenStreetMapHot' : OpenStreetMap_HOT, 
-    'ESRI Map': Esri_WorldStreetMap, 
-    'ESRI Imagery': Esri_WorldImagery, 
-    'CartoDB_DarkMatter' : CartoDB_DarkMatter
-    }, {})
-);
 
-
-//On veut mettre un style selon les attributs
 //catégorie_piscicole=1 et categorie_piscicole=2
-var categorie1 = water.features.filter(x => x.properties.categorie_piscicole == "1");
-var mapcategorie1 = L.geoJSON(categorie1, { style: { color: "#2fff00" } }).addTo(map);
-var categorie2 = water.features.filter(x => x.properties.categorie_piscicole == "2");
-var mapcategorie2 = L.geoJSON(categorie2, { style: { color: "#006eff" } }).addTo(map);
+mapcategorie1.addTo(map);
+mapcategorie2.addTo(map);
 //reserve de pêche
-var reserve_peche = water.features.filter(x => x.properties.fishing_restriction == "no_fishing");
-var reserve_peche = L.geoJSON(reserve_peche, { style: { color: "#e30909" } }).addTo(map);
-var reserve_tempo = water.features.filter(x => x.properties.fishing_restriction == "temporary_no_fishing");
-var reserve_tempo = L.geoJSON(reserve_tempo, { style: { color: "#e88c23" } }).addTo(map);
+reserve_peche.addTo(reserve);
+reserve_tempo.addTo(reserve);
 
 
+var overlays = {
+    'réserve de pêche': reserve
+};
 
-
-
-
-
-
-//fishing=restriction
-
-// var categorie_1 = L.geoJSON(json.parse)
-
-
-
-
-
-
+//controle fond de carte et layers
+const layerControl = L.control.layers(baselayers, overlays).addTo(map);
 
     </script>
 

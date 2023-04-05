@@ -21,3 +21,23 @@ var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all
 	subdomains: 'abcd',
 	maxZoom: 20
 });
+
+var baselayers = {
+    'OpenStreetMap': OpenStreetMap_France, 
+    'OpenStreetMapHot' : OpenStreetMap_HOT, 
+    'ESRI Map': Esri_WorldStreetMap, 
+    'ESRI Imagery': Esri_WorldImagery, 
+    'CartoDB_DarkMatter' : CartoDB_DarkMatter
+    };
+
+//catégorie_piscicole=1 et categorie_piscicole=2
+var categorie1 = water.features.filter(x => x.properties.categorie_piscicole == "1");
+var mapcategorie1 = L.geoJSON(categorie1, { style: { color: "#2fff00" } })
+var categorie2 = water.features.filter(x => x.properties.categorie_piscicole == "2");
+var mapcategorie2 = L.geoJSON(categorie2, { style: { color: "#006eff" } })
+//reserve de pêche
+var reserve_peche = water.features.filter(x => x.properties.fishing_restriction == "no_fishing");
+var reserve_peche = L.geoJSON(reserve_peche, { style: { color: "#e30909" } })
+var reserve_tempo = water.features.filter(x => x.properties.fishing_restriction == "temporary_no_fishing");
+var reserve_tempo = L.geoJSON(reserve_tempo, { style: { color: "#e88c23" } })
+
