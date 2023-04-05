@@ -37,11 +37,14 @@
     <script type="text/javascript">
 
 var reserve = L.layerGroup();
+var categoriepiscicole = L.layerGroup();
 
 //pour ajouter la map leaflet
 var map 
 map = L.map("map").setView([43.942259, 4.797535], 12);
 
+//pour créer la couche geojson
+var water_lyr = L.geoJSON(water, {style: {weight:1}}).addTo(map);
 //geolocalisation
 var ld 
 ld = L.control.locate({
@@ -53,14 +56,15 @@ ld = L.control.locate({
 map.addLayer(OpenStreetMap_France);
 
 //catégorie_piscicole=1 et categorie_piscicole=2
-mapcategorie1.addTo(map);
-mapcategorie2.addTo(map);
+mapcategorie1.addTo(categoriepiscicole);
+mapcategorie2.addTo(categoriepiscicole);
 //reserve de pêche
 reserve_peche.addTo(reserve);
 reserve_tempo.addTo(reserve);
 
 var overlays = {
-    'réserve de pêche': reserve
+    'réserve de pêche': reserve,
+    'catégorie piscicole' : categoriepiscicole
 };
 
 //controle fond de carte et layers
