@@ -13,6 +13,7 @@
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
 
+
     <style>
         html, body {
             margin: 0px;
@@ -34,6 +35,8 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script src="water.geojson" type="text/javascript"></script>    
     <script type="text/javascript" src="variable.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+
     <script type="text/javascript">
 
 var reserve = L.layerGroup();
@@ -41,7 +44,7 @@ var categoriepiscicole = L.layerGroup();
 
 //pour ajouter la map leaflet
 var map 
-map = L.map("map").setView([43.942259, 4.797535], 12);
+map = L.map("map",{ zoomControl:true, maxZoom:28, minZoom:1}).setView([43.942259, 4.797535], 12);
 
 //pour créer la couche geojson
 var water_lyr = L.geoJSON(water, {style: {weight:1}}).addTo(map);
@@ -73,7 +76,41 @@ var layerControl
 layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
 layerControl.addTo(map);
 
+//popup
+var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
+var bounds_group = new L.featureGroup();
+        function setBounds() {
+        }
+        function pop_info(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                }
+            });
+         
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ref_sandre'] !== null ? autolinker.link(feature.properties['ref_sandre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                     <tr>\
+                        <td colspan="2">' + (feature.properties['old_ref_sandre'] !== null ? autolinker.link(feature.properties['old_ref_sandre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        var layer_popinfo = new L.geoJson(water, {
+            onEachFeature: pop_info,
+        });
+        bounds_group.addLayer(layer_popinfo);
+        map.addLayer(layer_popinfo);
+        
 </script>
 
     </body>
