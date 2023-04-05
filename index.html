@@ -59,15 +59,17 @@ mapcategorie2.addTo(map);
 reserve_peche.addTo(reserve);
 reserve_tempo.addTo(reserve);
 
-
 var overlays = {
     'réserve de pêche': reserve
 };
 
 //controle fond de carte et layers
-const layerControl = L.control.layers(baselayers, overlays).addTo(map);
+var layerControl
+layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
+layerControl.addTo(map);
 
-    </script>
 
-</body>
-</html>
+</script>
+
+    </body>
+        </html>
