@@ -48,7 +48,8 @@ var water_lyr = L.geoJSON(water, {style: {weight:1}}).addTo(map);
 //geolocalisation
 var ld 
 ld = L.control.locate({
-    flyTo: 'yes'
+    flyTo: 'yes',
+    returnToPrevBounds:'true'
     })
 .addTo(map);
 
