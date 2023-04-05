@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin="" />
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-            crossorigin=""></script>
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
 
     <style>
         html, body {
@@ -19,8 +19,6 @@
             width: 100%;
             height: 100%;
         }
-
-
         #map {
             width: 100%;
             height: 100%;
@@ -61,18 +59,27 @@ map.addControl(new L.Control.Layers( {
 
 //On veut mettre un style selon les attributs
 //catégorie_piscicole=1 et categorie_piscicole=2
-L.geoJSON(water, {
-    style: function(feature) {
-        switch (feature.properties.categorie_piscicole) {
-            case '1': return {color: "#2fff00"};
-            case '2': return {color: "#006eff"};
-        }
-    }
-}).addTo(map);
+var categorie1 = water.features.filter(x => x.properties.categorie_piscicole == "1");
+var mapcategorie1 = L.geoJSON(categorie1, { style: { color: "#2fff00" } }).addTo(map);
+var categorie2 = water.features.filter(x => x.properties.categorie_piscicole == "2");
+var mapcategorie2 = L.geoJSON(categorie2, { style: { color: "#006eff" } }).addTo(map);
+
+//reserve de pêche
+var reserve_peche = water.features.filter(x => x.properties.fishing_restriction == "no_fishing");
+var reserve_peche = L.geoJSON(reserve_peche, { style: { color: "#e30909" } }).addTo(map);
+var reserve_tempo = water.features.filter(x => x.properties.fishing_restriction == "temporary_no_fishing");
+var reserve_tempo = L.geoJSON(reserve_tempo, { style: { color: "#e88c23" } }).addTo(map);
+
+
+
+
+
+
+
+
 //fishing=restriction
 
-var categorie_1 = L.geoJSON(json.parse)
-
+// var categorie_1 = L.geoJSON(json.parse)
 
 
 
