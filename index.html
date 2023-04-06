@@ -34,17 +34,6 @@
 <body>
     <div id="map">
     </div>
-<<<<<<< Updated upstream
-    <script src="path/to/autolinker/dist/Autolinker.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <script src="water.geojson" type="text/javascript"></script>    
-    <script type="text/javascript" src="variable.js"></script>
-    <script src="js/Autolinker.min.js"></script>
-    <script src="water.geojson" type="text/javascript"></script>    
-    <script type="text/javascript" src="variable.js"></script>
-    <script src="js/Autolinker.min.js"></script>
-=======
->>>>>>> Stashed changes
 
         <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
         <script src="data/fishing_restriction.js"></script>
@@ -66,47 +55,6 @@ ld = L.control.locate({
     })
 .addTo(map);
 
-<<<<<<< Updated upstream
-//Tile providers
-map.addLayer(OpenStreetMap_France);
-
-//catégorie_piscicole=1 et categorie_piscicole=2
-mapcategorie1.addTo(categoriepiscicole);
-mapcategorie2.addTo(categoriepiscicole);
-
-//reserve de pêche
-reserve_peche.addTo(reserve);
-reserve_tempo.addTo(reserve);
-
-var overlays = {
-    'réserve de pêche': reserve,
-    'catégorie piscicole' : categoriepiscicole
-};
-
-//controle fond de carte et layers
-var layerControl
-layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
-layerControl.addTo(map);
-
-//popup
-var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-//Tile providers
-map.addLayer(OpenStreetMap_France);
-
-//catégorie_piscicole=1 et categorie_piscicole=2
-mapcategorie1.addTo(categoriepiscicole);
-mapcategorie2.addTo(categoriepiscicole);
-//reserve de pêche
-reserve_peche.addTo(reserve);
-reserve_tempo.addTo(reserve);
-
-var overlays = {
-    'réserve de pêche': reserve,
-    'catégorie piscicole' : categoriepiscicole
-};
-
-=======
->>>>>>> Stashed changes
 //controle fond de carte et layers
 var layerControl
 layerControl = L.control.layers(baselayers);
@@ -115,25 +63,9 @@ layerControl.addTo(map);
 //add geojson cours d'eau (all data)
 var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
-<<<<<<< Updated upstream
-/*var bounds_group = new L.featureGroup();
-        function setBounds() {
-        }
-        function pop_info(feature, layer) {
-            layer.on({
-                mouseout: function(e) {
-                    for (i in e.target._eventParents) {
-                        e.target._eventParents[i].resetStyle(e.target);
-                    }
-                }
-            });
-         
-            var popupContent = '<table>\
-=======
 
 function forEachFeature(feature, layer) {
     var popupContent = '<table>\
->>>>>>> Stashed changes
                     <tr>\
                         <td colspan="2"><strong>name</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
                     </tr>\
@@ -142,24 +74,12 @@ function forEachFeature(feature, layer) {
                     </tr>\
                 </table>';
 
-<<<<<<< Updated upstream
-        var layer_popinfo = new L.geoJson(water, {
-            onEachFeature: pop_info,
-        });
-        bounds_group.addLayer(layer_popinfo);
-        map.addLayer(layer_popinfo);
-*/
-
-L.geoJSON(water).bindPopup(function (layer) {return layer.feature.properties.ref_sandre;}).addTo(map);
-
-=======
         layer.bindPopup(popupContent);
     }
 
 L.geoJSON(json_cours_eau, {
    onEachFeature: forEachFeature}
     ).addTo(map)
->>>>>>> Stashed changes
 </script>
     </body>
         </html>
