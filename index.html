@@ -61,7 +61,6 @@ layerControl = L.control.layers(baselayers);
 layerControl.addTo(map);
 
 //add geojson cours d'eau (all data)
-
 L.geoJSON(json_cours_eau, {
    onEachFeature: popupcourseau}
     ).addTo(map)
