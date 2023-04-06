@@ -1,4 +1,4 @@
-var json_plandeau_0 = {
+var json_plandeau = {
 "type": "FeatureCollection",
 "name": "plandeau_0",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },

@@ -42,6 +42,10 @@
         <script src="js/popup.js"></script>
 
 <script>
+    
+var reserveoverlay = L.layerGroup();
+var categoriepiscicoleoverlay = L.layerGroup();
+
 //map de base
 var map 
 map = L.map("map",{ zoomControl:true, maxZoom:28, minZoom:1, tapTolerance: '30'}).setView([43.942259, 4.797535], 12);
@@ -55,15 +59,44 @@ ld = L.control.locate({
     })
 .addTo(map);
 
+//categorie piscicole
+var categoriepiscicole = L.geoJSON(json_categorie_piscicole, {
+    style: function(feature) {
+        switch (feature.properties.categorie_piscicole) {
+            case '1': return {color: "#2fff00", weight: '2'};
+            case '2':   return {color: "#006eff", weight: '2'};
+        }
+    }
+});
+
+//réserve de peche
+var reservepeche = L.geoJSON(json_fishing_restriction, {
+    style: function(feature) {
+        switch (feature.properties.fishing_restriction) {
+            case 'temporary_no_fishing': return {color: "#e88c23",weight:'2',pane: 'shadowPane'};
+            case 'no_fishing':   return {color: "#e30909",weight:'2',pane: 'shadowPane'};
+        }
+    }
+});
+
+var overlays = {
+    'réserve de pêche': reservepeche,
+    'catégorie piscicole' : categoriepiscicole
+};
+
 //controle fond de carte et layers
 var layerControl
-layerControl = L.control.layers(baselayers);
+layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
 layerControl.addTo(map);
 
 //add geojson cours d'eau (all data)
 L.geoJSON(json_cours_eau, {
-   onEachFeature: popupcourseau}
-    ).addTo(map)
+    style : {weight: '3'},
+    onEachFeature: popupcourseau}
+    ).addTo(map);
+
+
+
 </script>
     </body>
         </html>

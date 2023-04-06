@@ -1,4 +1,4 @@
-var json_categorie_piscicole_2 = {
+var json_categorie_piscicole = {
 "type": "FeatureCollection",
 "name": "categorie_piscicole_2",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
