@@ -40,11 +40,12 @@
         <script src="data/categorie_piscicole.js"></script>
         <script src="data/cours_eau.js"></script>
         <script src="js/Autolinker.min.js"></script>
-        
+        <script src="js/popup.js"></script>
+
 <script>
 //map de base
 var map 
-map = L.map("map",{ zoomControl:true, maxZoom:28, minZoom:1}).setView([43.942259, 4.797535], 12);
+map = L.map("map",{ zoomControl:true, maxZoom:28, minZoom:1, tapTolerance: '30'}).setView([43.942259, 4.797535], 12);
 map.addLayer(OpenStreetMap_France);
 
 //geolocalisation
@@ -61,24 +62,9 @@ layerControl = L.control.layers(baselayers);
 layerControl.addTo(map);
 
 //add geojson cours d'eau (all data)
-var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-
-
-function forEachFeature(feature, layer) {
-    var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2"><strong>name</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>ref:sandre</strong><br />' + (feature.properties['ref_sandre'] !== null ? autolinker.link(feature.properties['ref_sandre'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-
-        layer.bindPopup(popupContent);
-    }
 
 L.geoJSON(json_cours_eau, {
-   onEachFeature: forEachFeature}
+   onEachFeature: popupcourseau}
     ).addTo(map)
 </script>
     </body>
