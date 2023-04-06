@@ -106,7 +106,7 @@ layerControl.addTo(map);
 //popup
 var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
-var bounds_group = new L.featureGroup();
+/*var bounds_group = new L.featureGroup();
         function setBounds() {
         }
         function pop_info(feature, layer) {
@@ -137,7 +137,10 @@ var bounds_group = new L.featureGroup();
         });
         bounds_group.addLayer(layer_popinfo);
         map.addLayer(layer_popinfo);
-//
+*/
+
+L.geoJSON(water).bindPopup(function (layer) {return layer.feature.properties.ref_sandre;}).addTo(map);
+
 </script>
 
     </body>
