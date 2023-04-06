@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Pêche Vaucluse</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <title>Pêche Vaucluse</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
-
-
+    <script src="js/leaflet-providers.js"></script>
     <style>
         html, body {
             margin: 0px;
@@ -30,8 +33,8 @@
 
 <body>
     <div id="map">
-
     </div>
+<<<<<<< Updated upstream
     <script src="path/to/autolinker/dist/Autolinker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script src="water.geojson" type="text/javascript"></script>    
@@ -40,18 +43,21 @@
     <script src="water.geojson" type="text/javascript"></script>    
     <script type="text/javascript" src="variable.js"></script>
     <script src="js/Autolinker.min.js"></script>
+=======
+>>>>>>> Stashed changes
 
-    <script type="text/javascript">
-
-var reserve = L.layerGroup();
-var categoriepiscicole = L.layerGroup();
-
-//pour ajouter la map leaflet
+        <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+        <script src="data/fishing_restriction.js"></script>
+        <script src="data/categorie_piscicole.js"></script>
+        <script src="data/cours_eau.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        
+<script>
+//map de base
 var map 
 map = L.map("map",{ zoomControl:true, maxZoom:28, minZoom:1}).setView([43.942259, 4.797535], 12);
+map.addLayer(OpenStreetMap_France);
 
-//pour créer la couche geojson
-var water_lyr = L.geoJSON(water, {style: {weight:1}}).addTo(map);
 //geolocalisation
 var ld 
 ld = L.control.locate({
@@ -60,6 +66,7 @@ ld = L.control.locate({
     })
 .addTo(map);
 
+<<<<<<< Updated upstream
 //Tile providers
 map.addLayer(OpenStreetMap_France);
 
@@ -98,14 +105,17 @@ var overlays = {
     'catégorie piscicole' : categoriepiscicole
 };
 
+=======
+>>>>>>> Stashed changes
 //controle fond de carte et layers
 var layerControl
-layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
+layerControl = L.control.layers(baselayers);
 layerControl.addTo(map);
 
-//popup
+//add geojson cours d'eau (all data)
 var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
+<<<<<<< Updated upstream
 /*var bounds_group = new L.featureGroup();
         function setBounds() {
         }
@@ -119,19 +129,20 @@ var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
             });
          
             var popupContent = '<table>\
+=======
+
+function forEachFeature(feature, layer) {
+    var popupContent = '<table>\
+>>>>>>> Stashed changes
                     <tr>\
-                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2"><strong>name</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['ref_sandre'] !== null ? autolinker.link(feature.properties['ref_sandre'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                     <tr>\
-                        <td colspan="2">' + (feature.properties['old_ref_sandre'] !== null ? autolinker.link(feature.properties['old_ref_sandre'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2"><strong>ref:sandre</strong><br />' + (feature.properties['ref_sandre'] !== null ? autolinker.link(feature.properties['ref_sandre'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
 
+<<<<<<< Updated upstream
         var layer_popinfo = new L.geoJson(water, {
             onEachFeature: pop_info,
         });
@@ -141,7 +152,14 @@ var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
 L.geoJSON(water).bindPopup(function (layer) {return layer.feature.properties.ref_sandre;}).addTo(map);
 
-</script>
+=======
+        layer.bindPopup(popupContent);
+    }
 
+L.geoJSON(json_cours_eau, {
+   onEachFeature: forEachFeature}
+    ).addTo(map)
+>>>>>>> Stashed changes
+</script>
     </body>
         </html>
