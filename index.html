@@ -55,8 +55,10 @@ L.geoJSON(json_cours_eau, {
     onEachFeature: popupcourseau}
     ).addTo(map);
 
-var planeau = json_plandeau.features.filter(x => x.properties.fishing_restriction == null);
-var mapplaneau = L.geoJSON(planeau, { style: {weight:'2'},onEachFeature: popupplan_eau }).addTo(map);
+L.geoJSON(json_plandeau, { 
+    style: {weight:'2'},
+    onEachFeature: popupplan_eau }
+    ).addTo(map);
 
 var overlays = {
     'réserve de pêche': reserveoverlay,
