@@ -29,17 +29,14 @@
 <body>
     <div id="map">
     </div>
-
         <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
         <script src="data/fishing_restriction.js"></script>
         <script src="data/categorie_piscicole.js"></script>
         <script src="data/cours_eau.js"></script>
+        <script src="js/variable.js"></script>
         <script src="js/popup.js"></script>
 
 <script>
-    
-var reserveoverlay = L.layerGroup();
-var categoriepiscicoleoverlay = L.layerGroup();
 
 //map de base
 var map 
@@ -54,29 +51,9 @@ ld = L.control.locate({
     })
 .addTo(map);
 
-//categorie piscicole
-var categoriepiscicole = L.geoJSON(json_categorie_piscicole, {
-    style: function(feature) {
-        switch (feature.properties.categorie_piscicole) {
-            case '1': return {color: "#2fff00", weight: '2'};
-            case '2':   return {color: "#006eff", weight: '2'};
-        }
-    }
-});
-//réserve de peche
-var reservepeche = L.geoJSON(json_fishing_restriction, {
-    style: function(feature) {
-        switch (feature.properties.fishing_restriction) {
-            case 'temporary_no_fishing': return {color: "#e88c23",weight:'2',pane: 'shadowPane'};
-            case 'no_fishing':   return {color: "#e30909",weight:'2',pane: 'shadowPane'};
-        }
-    }
-});
-
-var overlays = {
-    'réserve de pêche': reservepeche,
-    'catégorie piscicole' : categoriepiscicole
-};
+//catégorie_piscicole=1 et categorie_piscicole=2
+reservepeche.addTo(reserveoverlay);
+categoriepiscicole.addTo(categoriepiscicoleoverlay);
 
 //controle fond de carte et layers
 var layerControl
@@ -88,9 +65,6 @@ L.geoJSON(json_cours_eau, {
     style : {weight: '3'},
     onEachFeature: popupcourseau}
     ).addTo(map);
-
-
-
 </script>
     </body>
         </html>
