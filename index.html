@@ -34,7 +34,6 @@
         <script src="data/fishing_restriction.js"></script>
         <script src="data/categorie_piscicole.js"></script>
         <script src="data/cours_eau.js"></script>
-        <script src="js/Autolinker.min.js"></script>
         <script src="js/popup.js"></script>
 
 <script>
@@ -64,7 +63,6 @@ var categoriepiscicole = L.geoJSON(json_categorie_piscicole, {
         }
     }
 });
-
 //réserve de peche
 var reservepeche = L.geoJSON(json_fishing_restriction, {
     style: function(feature) {
@@ -82,7 +80,7 @@ var overlays = {
 
 //controle fond de carte et layers
 var layerControl
-layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
+layerControl = L.control.layers(baselayers, overlays,{position:'topleft'});
 layerControl.addTo(map);
 
 //add geojson cours d'eau (all data)
