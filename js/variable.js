@@ -19,3 +19,17 @@ var reservepeche = L.geoJSON(json_fishing_restriction, {
         }
     },onEachFeature :popupreserve}
     ).addTo(reserveoverlay);
+
+//plan d'eau reserve
+var planeaureserve = json_plandeau.features.filter(x => x.properties.fishing_restriction == "no_fishing");
+var mapplaneaureserve = L.geoJSON(planeaureserve, { 
+    style: { color: "#e30909",weight:'2' },
+    popupplan_eau_reserve }).addTo(reserveoverlay);
+
+var planeaureservetempo = json_plandeau.features.filter(x => x.properties.fishing_restriction == "temporary_no_fishing");
+var mapplaneaureservetempo = L.geoJSON(planeaureservetempo, { 
+    style: { color: "#e88c23",weight:'2'},
+    popupplan_eau_reserve}).addTo(reserveoverlay);
+
+
+

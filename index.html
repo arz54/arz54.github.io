@@ -33,6 +33,7 @@
         <script src="data/fishing_restriction.js"></script>
         <script src="data/categorie_piscicole.js"></script>
         <script src="data/cours_eau.js"></script>
+        <script src="data/plandeau.js"></script>
         <script src="js/popup.js"></script>
         <script src="js/variable.js"></script>
 
@@ -46,14 +47,16 @@ var ld
 ld = L.control.locate({
     flyTo: 'yes',
     returnToPrevBounds:'true'
-    })
-.addTo(map);
+    }).addTo(map);
 
 //add geojson cours d'eau (all data)
 L.geoJSON(json_cours_eau, {
-    style : {weight: '3'},
+    style : {weight: '2'},
     onEachFeature: popupcourseau}
     ).addTo(map);
+
+var planeau = json_plandeau.features.filter(x => x.properties.fishing_restriction == null);
+var mapplaneau = L.geoJSON(planeau, { style: {weight:'2'},onEachFeature: popupplan_eau }).addTo(map);
 
 var overlays = {
     'réserve de pêche': reserveoverlay,
