@@ -1,15 +1,18 @@
+//popup pour la couche cours d'eau affiche nom + code sandre 
+var attributs = [
+    {label: 'Nom', value: 'name'},
+    {label: 'Code sandre', value:'code_sandre'},
+    ]
+    
 function popupcourseau(feature, layer) {
-    var popupContent = 
-    '<table>\
-        <tr>\
-            <td> <strong>Nom</strong><br />' + (feature.properties['name']) + '</td>\
-        </tr>\
-        <tr>\
-            <td> <strong>Code sandre</strong><br />' + (feature.properties['ref_sandre']) + '</td>\
-        </tr>\
-    </table>';
-        layer.bindPopup(popupContent);
-        };
+        var popupContent = '';
+        for (var i = 0; i <attributs.length; i++){
+           var current_attribut =   (!feature.properties[attributs[i].value]) ?  'Pas de ' + attributs[i].label +'<br>' : attributs[i].label+' : ' + feature.properties[attributs[i].value] +'<br>';
+            popupContent = popupContent + current_attribut; // ou popupname += current_attribut (c'est pareil)
+        }
+    
+            layer.bindPopup(popupContent);  
+    };
 
 function popupreserve(feature, layer) {
     var popupContentReserve = 
