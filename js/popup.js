@@ -1,7 +1,7 @@
 //popup pour la couche cours d'eau affiche nom + code sandre 
 var attributs = [
     {label: 'Nom', value: 'name'},
-    {label: 'Code sandre', value:'code_sandre'},
+    {label: 'Code sandre', value:'ref_sandre'},
     ]
     
 function popupcourseau(feature, layer) {
