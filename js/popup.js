@@ -21,7 +21,7 @@ function popupreserve(feature, layer) {
             <td> <strong>Nom</strong><br />' + (feature.properties['name']) + '</td>\
         </tr>\
         <tr>\
-            <td> <strong>Code sandre</strong><br />' + (feature.properties['ref_sandre']) + '</td>\
+            <td> <strong>Code sandre</strong><br />' + (feature.properties['ref:sandre']) + '</td>\
         </tr>\
         <tr>\
             <td> <strong></strong><br />' + (feature.properties['fishing:fr:description']) + '</td>\
@@ -44,7 +44,7 @@ function popupcategoriepiscicole(feature, layer) {
             <td> <strong>Nom</strong><br />' + (feature.properties['name']) + '</td>\
         </tr>\
         <tr>\
-            <td> <strong>Code sandre</strong><br />' + (feature.properties['ref_sandre']) + '</td>\
+            <td> <strong>Code sandre</strong><br />' + (feature.properties['ref:sandre']) + '</td>\
         </tr>\
     </table>';
         layer.bindPopup(popupContentcategoriepiscicole);
