@@ -40,13 +40,12 @@
 
 <script>
 //map de base
-var testcanvas = L.canvas({ tolerance: 15 });
+var testcanvas = L.canvas({tolerance: 5});
 var map 
 map = L.map("map",{
     zoomControl:true, 
     maxZoom:28, 
-    minZoom:1, 
-    tapTolerance: 30,
+    minZoom:1,
     renderer: testcanvas}
     ).setView([43.942259, 4.797535], 12);
 
