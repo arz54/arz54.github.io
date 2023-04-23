@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <title>Pêche Vaucluse</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="js/leaflet-providers.js"></script>
 
     <style>
         html, body {
@@ -30,89 +28,52 @@
 
 <body>
     <div id="map">
-
     </div>
-    <script src="path/to/autolinker/dist/Autolinker.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <script src="water.geojson" type="text/javascript"></script>    
-    <script type="text/javascript" src="variable.js"></script>
-    <script src="js/Autolinker.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+        <script src="data/fishing_restriction.js"></script>
+        <script src="data/categorie_piscicole.js"></script>
+        <script src="data/cours_eau.js"></script>
+        <script src="data/plandeau.js"></script>
+        <script src="js/style.js"></script>
+        <script src="js/popup.js"></script>
+        <script src="js/variable.js"></script>
 
-    <script type="text/javascript">
-
-var reserve = L.layerGroup();
-var categoriepiscicole = L.layerGroup();
-
-//pour ajouter la map leaflet
+<script>
+//map de base
 var map 
-map = L.map("map",{ zoomControl:true, maxZoom:28, minZoom:1}).setView([43.942259, 4.797535], 12);
-
-//pour créer la couche geojson
-var water_lyr = L.geoJSON(water, {style: {weight:1}}).addTo(map);
+map = L.map("map",{zoomControl:true, maxZoom:28, minZoom:1, tapTolerance: '30'}).setView([43.942259, 4.797535], 12);
+map.addLayer(OpenStreetMap_France);
 //geolocalisation
 var ld 
 ld = L.control.locate({
     flyTo: 'yes',
     returnToPrevBounds:'true'
-    })
-.addTo(map);
+    }).addTo(map);
 
-//Tile providers
-map.addLayer(OpenStreetMap_France);
+//add geojson cours d'eau (all data)
+L.geoJSON(json_plandeau, { 
+    style: {weight:'2'},
+    onEachFeature: popupplan_eau }
+    ).addTo(map);
 
-//catégorie_piscicole=1 et categorie_piscicole=2
-mapcategorie1.addTo(categoriepiscicole);
-mapcategorie2.addTo(categoriepiscicole);
-//reserve de pêche
-reserve_peche.addTo(reserve);
-reserve_tempo.addTo(reserve);
-
+L.geoJSON(json_cours_eau, {
+    style: style_intermittent,
+    onEachFeature: popupcourseau}
+    ).addTo(map);
+          
 var overlays = {
-    'réserve de pêche': reserve,
-    'catégorie piscicole' : categoriepiscicole
+    'réserve de pêche': reserveoverlay,
+    'catégorie piscicole' : categoriepiscicoleoverlay
 };
 
 //controle fond de carte et layers
 var layerControl
-layerControl = L.control.layers(baselayers, overlays,{collapsed:'',position:'topleft'});
+layerControl = L.control.layers(baselayers, overlays,{position:'topleft'});
 layerControl.addTo(map);
 
-//popup
-var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
-var bounds_group = new L.featureGroup();
-        function setBounds() {
-        }
-        function pop_info(feature, layer) {
-            layer.on({
-                mouseout: function(e) {
-                    for (i in e.target._eventParents) {
-                        e.target._eventParents[i].resetStyle(e.target);
-                    }
-                }
-            });
-         
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ref_sandre'] !== null ? autolinker.link(feature.properties['ref_sandre'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                     <tr>\
-                        <td colspan="2">' + (feature.properties['old_ref_sandre'] !== null ? autolinker.link(feature.properties['old_ref_sandre'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        var layer_popinfo = new L.geoJson(water, {
-            onEachFeature: pop_info,
-        });
-        bounds_group.addLayer(layer_popinfo);
-        map.addLayer(layer_popinfo);
-//
 </script>
-
     </body>
         </html>
+
+       
